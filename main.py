@@ -31,9 +31,26 @@ class Store:
     def __init__(self, items, capacity=100):
         self.capacity = capacity
         self.items = items
-    
+        
     def add(self, name, amount):
-        self.name = name
-        self.amount = amount
-        if self.amount > 0:
-            self.items[self.name] += self.amount
+        if self.get_free_space >= amount:
+            self.items[name] += amount
+        else:
+            return "Нет свободных мест на складе"
+
+    def remove(self, name, amount):
+        if self.get_free_space > amount:
+            self.items[name] += amount
+        else:
+            return "Не хватает товара для совершения операции"
+    
+    def get_free_space(self):
+        free_space = 0
+        for item in self.items.values():
+            free_space += item
+        return self.capacity - free_space
+
+    
+    
+    
+            
